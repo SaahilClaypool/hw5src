@@ -39,12 +39,14 @@ class ElectionData {
         if(second.equals(third)){
             throw new DuplicateVotesException(second);
         }
-
+        // move to data class
         firstChoice.put(first, firstChoice.get(first) +1);
         secondChoice.put(second , secondChoice.get(second) +1);
         thirdChoice.put(third, thirdChoice.get(third) +1);
     }
     public void addCandidate(String cand) throws CandidateExistsException{
+        // move to data(check and throw) whole method)
+        // chekcing if ballot contains still in this?
         if(!ballot.contains(cand)){
             ballot.add(cand);
             firstChoice.put(cand, 0);
@@ -88,6 +90,7 @@ class ElectionData {
         });
         return keyMax[0];
     }
+    // getSum of individual list, return sum of all three.
     private HashMap<String, Integer> getSumMap(){
         final HashMap<String, Integer> totalPoints = new HashMap<String,Integer>();
         totalPoints.putAll(firstChoice);
