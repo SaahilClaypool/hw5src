@@ -57,19 +57,9 @@ public class Examples {
         e.processVotes("4","5","1");
         return t.checkExpect("5", e.findWinnerMostPoints());
     }
-    public static int test(String s){
-        try{
-            System.out.println(s.charAt(0));
-        }
-        catch(Exception e){
-            System.out.println("second");
-            return 1;
-        }
-        return 2;
 
-    }
     public static void main(String[] args) {
         Tester.run(new Examples());
-        System.out.println(Examples.test(null));
+        
     }
 }
