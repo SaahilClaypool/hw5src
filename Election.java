@@ -28,8 +28,8 @@ class ElectionData {
         if(!ballot.contains(second)){
             throw new UnknownCandidateException(second);
         }
-        if(!ballot.contains(second)){
-            throw new UnknownCandidateException(second);
+        if(!ballot.contains(third)){
+            throw new UnknownCandidateException(third);
         }
         if(first.equals(second) || first.equals(third)){
             throw new DuplicateVotesException(first);
@@ -50,31 +50,6 @@ class ElectionData {
         else
             throw new CandidateExistsException(cand);
     }
-    public void screen() {
-        this.printBallot();
-        String[] myVote = new String[3];
-        System.out.println("Who is your first choice?");
-        String candidate = keyboard.next();
-        myVote[0] = candidate;
-        System.out.println("Who is your second choice?");
-        String candidate2 = keyboard.next();
-        myVote[1] = candidate2;
-        System.out.println("Who is your third choice?");
-        String candidate3 = keyboard.next();
-        myVote[2] = candidate3;
-        System.out.printf("You voted for \n    1. %s \n    2. %s \n    3. %s\n", candidate, candidate2, candidate3);
-        try {
-            processVotes(myVote[0], myVote[1], myVote[2]);
-        } catch (DuplicateVotesException e) {
-            e.printStackTrace();
-            System.out.printf("Duplicate Canditate: %s\n", e.cand);
-
-
-        } catch (UnknownCandidateException e) {
-            e.printStackTrace();
-            System.out.printf("Unknown Canditate: %s\n", e.cand);
-        }
-    }
 
     public String findWinnerMostFirstVotes(){
         return votes.getWinnerMostVotes();
@@ -86,7 +61,8 @@ class ElectionData {
     }
     public static void main(String[] args) {
         ElectionData el = new ElectionData();
-        el.screen();
+        VotingMachine ma = new VotingMachine(el);
+        ma.screen();
 
     }
 }
