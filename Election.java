@@ -5,9 +5,7 @@ import java.util.Scanner;
 class ElectionData {
     LinkedList<String> ballot = new LinkedList<String>();
     // LinkedList<String> votes = new LinkedList<String>();
-    HashMap<String, Integer> firstChoice = new HashMap<>();
-    HashMap<String, Integer> secondChoice = new HashMap<>();
-    HashMap<String, Integer> thirdChoice = new HashMap<>();
+    VoteData votes = new HashVote();
 
 
     Scanner keyboard = new Scanner(System.in);
@@ -40,82 +38,51 @@ class ElectionData {
             throw new DuplicateVotesException(second);
         }
         // move to data class
-        firstChoice.put(first, firstChoice.get(first) +1);
-        secondChoice.put(second , secondChoice.get(second) +1);
-        thirdChoice.put(third, thirdChoice.get(third) +1);
+        votes.addTally(first, second,third);
     }
     public void addCandidate(String cand) throws CandidateExistsException{
         // move to data(check and throw) whole method)
         // chekcing if ballot contains still in this?
         if(!ballot.contains(cand)){
             ballot.add(cand);
-            firstChoice.put(cand, 0);
-            secondChoice.put(cand , 0);
-            thirdChoice.put(cand, 0);
+            votes.addOption(cand);
         }
         else
             throw new CandidateExistsException(cand);
     }
     public void screen() {
         this.printBallot();
+        String[] myVote = new String[3];
         System.out.println("Who is your first choice?");
         String candidate = keyboard.next();
-        firstChoice.put(candidate,0);
+        myVote[0] = candidate;
         System.out.println("Who is your second choice?");
         String candidate2 = keyboard.next();
-        secondChoice.put(candidate2,0);
+        myVote[1] = candidate2;
         System.out.println("Who is your third choice?");
         String candidate3 = keyboard.next();
-        thirdChoice.put(candidate3,0);
+        myVote[2] = candidate3;
         System.out.printf("You voted for \n    1. %s \n    2. %s \n    3. %s\n", candidate, candidate2, candidate3);
+        try {
+            processVotes(myVote[0], myVote[1], myVote[2]);
+        } catch (DuplicateVotesException e) {
+            e.printStackTrace();
+            System.out.printf("Duplicate Canditate: %s\n", e.cand);
+
+
+        } catch (UnknownCandidateException e) {
+            e.printStackTrace();
+            System.out.printf("Unknown Canditate: %s\n", e.cand);
+        }
     }
 
-    public int countVotes(String forcand) {
-        /*int numvotes = 0;
-        for (String s : votes) {
-            if (s.equals(forcand))
-                numvotes = numvotes+1;
-        }
-        return numvotes;*/
-        return 1;
-    }
     public String findWinnerMostFirstVotes(){
-        final String[] keyMax = {""};
-        final int[] maxVal = {0};
-        firstChoice.forEach((key,value)->{
-            if(value> maxVal[0]){
-                maxVal[0] = value;
-                keyMax[0] = key;
-            }
-        });
-        return keyMax[0];
+        return votes.getWinnerMostVotes();
     }
     // getSum of individual list, return sum of all three.
-    private HashMap<String, Integer> getSumMap(){
-        final HashMap<String, Integer> totalPoints = new HashMap<String,Integer>();
-        totalPoints.putAll(firstChoice);
-        firstChoice.forEach((key, value)->{
-            totalPoints.put(key, totalPoints.get(key) + value);
-        });
-        secondChoice.forEach((key, value)->{
-            totalPoints.put(key, totalPoints.get(key) + value);
-        });
-        secondChoice.forEach((key, value)->{
-            totalPoints.put(key, totalPoints.get(key) + value);
-        });
-        return totalPoints;
-    }
+
     public String findWinnerMostPoints(){
-        HashMap<String,Integer> totalPoints = getSumMap();
-        final int[] maxVal = {0};
-        final String[] maxKey = {""};
-        totalPoints.forEach((key,value)-> {
-            if(value > maxVal[0]){
-                maxVal[0] = value;
-                maxKey[0] = key;
-            }
-        });
-        return maxKey[0];
+        return votes.getWinnerMostPoints();
     }
     public static void main(String[] args) {
         ElectionData el = new ElectionData();
