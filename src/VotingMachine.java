@@ -23,7 +23,7 @@ public class VotingMachine {
         myVote[2] = candidate3;
 
         try {
-            data.processVotes(myVote[0], myVote[1], myVote[2]);
+            data.processVote(myVote[0], myVote[1], myVote[2]);
             System.out.printf("You voted for \n    1. %s \n    2. %s \n    3. %s\n", candidate, candidate2, candidate3);
         }catch (UnknownCandidateException e) {
 

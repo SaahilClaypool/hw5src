@@ -36,11 +36,11 @@ public class Examples {
         e.addCandidate("3");
         e.addCandidate("4");
         e.addCandidate("5");
-        e.processVotes("1", "5","3");
-        e.processVotes("5","3","4");
-        e.processVotes("2","5","4");
-        e.processVotes("3","5","4");
-        e.processVotes("4","5","1");
+        e.processVote("1", "5","3");
+        e.processVote("5","3","4");
+        e.processVote("2","5","4");
+        e.processVote("3","5","4");
+        e.processVote("4","5","1");
         return t.checkExpect("1".equals(e.findWinnerMostFirstVotes()));
     }
     public boolean testMostPoints(Tester t) throws DuplicateVotesException, UnknownCandidateException, CandidateExistsException {
@@ -50,11 +50,11 @@ public class Examples {
         e.addCandidate("3");
         e.addCandidate("4");
         e.addCandidate("5");
-        e.processVotes("1", "5","3");
-        e.processVotes("5","3","4");
-        e.processVotes("2","5","4");
-        e.processVotes("3","5","4");
-        e.processVotes("4","5","1");
+        e.processVote("1", "5","3");
+        e.processVote("5","3","4");
+        e.processVote("2","5","4");
+        e.processVote("3","5","4");
+        e.processVote("4","5","1");
         return t.checkExpect("5", e.findWinnerMostPoints());
     }
 
