@@ -2,8 +2,12 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 class ElectionData {
+    /**
+     * LinkedList of Strings showing list of existing candidates. Used for
+     * verification of votes.
+     */
     LinkedList<String> ballot = new LinkedList<String>();
-    // LinkedList<String> votes = new LinkedList<String>();
+
     VoteData votes = new HashVote();
 
     Scanner keyboard = new Scanner(System.in);
@@ -30,7 +34,7 @@ class ElectionData {
         }
         if (!ballot.contains(third)) {
             throw new UnknownCandidateException(third);
-        }
+        } // TODO refactor into a method. DRY.
         if (first.equals(second) || first.equals(third)) {
             throw new DuplicateVotesException(first);
         }
@@ -41,6 +45,12 @@ class ElectionData {
         votes.addTally(first, second, third);
     }
 
+    /**
+     * TODO
+     * 
+     * @param cand
+     * @throws CandidateExistsException
+     */
     public void addCandidate(String cand) throws CandidateExistsException {
         // move to data(check and throw) whole method)
         // chekcing if ballot contains still in this?
