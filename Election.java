@@ -1,68 +1,69 @@
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 class ElectionData {
-    LinkedList<String> ballot = new LinkedList<String>();
-    // LinkedList<String> votes = new LinkedList<String>();
-    VoteData votes = new HashVote();
+	private LinkedList<String> ballot = new LinkedList<String>();
+	// LinkedList<String> votes = new LinkedList<String>();
+	private VoteData votes = new HashVote();
 
+	Scanner keyboard = new Scanner(System.in);
 
-    Scanner keyboard = new Scanner(System.in);
+	ElectionData() {
+		this.ballot.add("Gompei");
+		this.ballot.add("Husky");
+	}
 
-    ElectionData() {
-        this.ballot.add("Gompei");
-        this.ballot.add("Husky");
-    }
+	public void printBallot() {
+		System.out.println("The candidates are ");
+		for (String s : ballot) {
+			System.out.println(s);
+		}
+	}
 
-    public void printBallot() {
-        System.out.println("The candidates are ");
-        for (String s : ballot) {
-            System.out.println(s);
-        }
-    }
-    public void processVotes(String first, String second, String third) throws DuplicateVotesException, UnknownCandidateException {
-        if(!ballot.contains(first)){
-            throw new UnknownCandidateException(first);
-        }
-        if(!ballot.contains(second)){
-            throw new UnknownCandidateException(second);
-        }
-        if(!ballot.contains(third)){
-            throw new UnknownCandidateException(third);
-        }
-        if(first.equals(second) || first.equals(third)){
-            throw new DuplicateVotesException(first);
-        }
-        if(second.equals(third)){
-            throw new DuplicateVotesException(second);
-        }
-        // move to data class
-        votes.addTally(first, second,third);
-    }
-    public void addCandidate(String cand) throws CandidateExistsException{
-        // move to data(check and throw) whole method)
-        // chekcing if ballot contains still in this?
-        if(!ballot.contains(cand)){
-            ballot.add(cand);
-            votes.addOption(cand);
-        }
-        else
-            throw new CandidateExistsException(cand);
-    }
+	public void processVotes(String first, String second, String third)
+			throws DuplicateVotesException, UnknownCandidateException {
+		if (!ballot.contains(first)) {
+			throw new UnknownCandidateException(first);
+		}
+		if (!ballot.contains(second)) {
+			throw new UnknownCandidateException(second);
+		}
+		if (!ballot.contains(third)) {
+			throw new UnknownCandidateException(third);
+		}
+		if (first.equals(second) || first.equals(third)) {
+			throw new DuplicateVotesException(first);
+		}
+		if (second.equals(third)) {
+			throw new DuplicateVotesException(second);
+		}
+		// move to data class
+		votes.addTally(first, second, third);
+	}
 
-    public String findWinnerMostFirstVotes(){
-        return votes.getWinnerMostVotes();
-    }
-    // getSum of individual list, return sum of all three.
+	public void addCandidate(String cand) throws CandidateExistsException {
+		if (ballot.contains(cand)) {
+			throw new CandidateExistsException(cand);
+		}
 
-    public String findWinnerMostPoints(){
-        return votes.getWinnerMostPoints();
-    }
-    public static void main(String[] args) {
-        ElectionData el = new ElectionData();
-        VotingMachine ma = new VotingMachine(el);
-        ma.screen();
+		ballot.add(cand);
+		votes.addOption(cand);
+	}
 
-    }
+	public String findWinnerMostFirstVotes() {
+		return votes.getWinnerMostVotes();
+	}
+
+	// getSum of individual list, return sum of all three.
+
+	public String findWinnerMostPoints() {
+		return votes.getWinnerMostPoints();
+	}
+
+	public static void main(String[] args) {
+		ElectionData el = new ElectionData();
+		VotingMachine ma = new VotingMachine(el);
+		ma.screen();
+
+	}
 }
