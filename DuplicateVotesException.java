@@ -2,6 +2,9 @@
  * Created by saahil claypool on 12/3/2015.
  */
 @SuppressWarnings("serial")
+/**
+ * thrown when a vote is processed with a duplicate candidate
+ */
 public class DuplicateVotesException extends Exception {
 	private String cand;
 
@@ -12,4 +15,6 @@ public class DuplicateVotesException extends Exception {
 	public String getCand() {
 		return cand;
 	}
+
+
 }

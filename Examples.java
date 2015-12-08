@@ -6,17 +6,17 @@ import tester.Tester;
  */
 public class Examples {
 	@TestMethod
-	// simple test
+	// simple test should throw becase tim has already been added to the list
 	public boolean testCandidateExists(Tester t)
 			throws CandidateExistsException {
 		ElectionData e = new ElectionData();
 		e.addCandidate("tim");
-		return t.checkException(new CandidateExistsException("Tim"), e,
+		return t.checkException(new CandidateExistsException("tim"), e,
 				"addCandidate", "tim");
 	}
 
 	@TestMethod
-	// simple test
+	// simple test that should throw because tom is entered twice
 	public boolean testDuplicateVotes(Tester t) throws CandidateExistsException {
 		ElectionData e = new ElectionData();
 		e.addCandidate("tim");
@@ -26,6 +26,7 @@ public class Examples {
 	}
 
 	@TestMethod
+    // Throws because unknown candidate is voted for
 	public boolean testUnkownCandidate(Tester t) {
 		ElectionData e = new ElectionData();
 		try {
@@ -39,14 +40,17 @@ public class Examples {
 	}
 
 	@TestMethod
+    // throws the unkown cadidate exception before the duplicate even though both are faulty votes
 	public boolean testOrderOfException(Tester t) {
 		ElectionData e = new ElectionData();
 		// would fail both exceptions, should throw unkown first
+
 		return t.checkException(new UnknownCandidateException("tim"), e,
 				"processVotes", "tim", "tim", "tom");
 	}
 
 	@TestMethod
+    // Winner should be "1" because it has the most first place votes but not most total
 	public boolean testMostVotes(Tester t) {
 		ElectionData e = getSampleElectionData();
 
@@ -55,19 +59,20 @@ public class Examples {
 	}
 
 	@TestMethod
+    // 5 should win because it has the most points
 	public boolean testMostPoints(Tester t) {
 		ElectionData e = getSampleElectionData();
 
 		return t.checkExpect("5", e.findWinnerMostPoints());
 	}
 
-	@TestMethod
+	/*@TestMethod
 	public boolean testMostPointsIntegration(Tester t) {
 		ElectionData e = getSampleElectionData();
 
 		return t.fail();
 	}
-
+*/
 	/*
 	 * (Non-javadoc)
 	 * @formatter:off

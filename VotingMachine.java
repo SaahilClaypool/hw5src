@@ -3,13 +3,15 @@ import java.util.Scanner;
 /**
  * Created by Saahil on 12/5/2015.
  */
+// Input Class
 public class VotingMachine {
 	private ElectionData data;
 	private Scanner keyboard = new Scanner(System.in);
 	public VotingMachine(ElectionData electionData){
 		data = electionData;
 	}
-	public void screen() {
+	// starts the input prompts
+    public void screen() {
 		data.printBallot();
 		String[] myVote = new String[3];
 		System.out.println("Who is your first choice?");

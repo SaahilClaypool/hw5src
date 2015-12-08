@@ -1,12 +1,12 @@
 import java.util.LinkedList;
-import java.util.Scanner;
+
 
 class ElectionData {
 	private LinkedList<String> ballot = new LinkedList<String>();
 	// LinkedList<String> votes = new LinkedList<String>();
 	private VoteData votes = new HashVote();
 
-	Scanner keyboard = new Scanner(System.in);
+
 
 	ElectionData() {
 		this.ballot.add("Gompei");
@@ -19,7 +19,7 @@ class ElectionData {
 			System.out.println(s);
 		}
 	}
-
+    // Takes in 3 votes, throws a duplicate if unknown candidate or duplicate vote
 	public void processVotes(String first, String second, String third)
 			throws DuplicateVotesException, UnknownCandidateException {
 		if (!ballot.contains(first)) {
@@ -41,6 +41,8 @@ class ElectionData {
 		votes.addTally(first, second, third);
 	}
 
+    // adds candidate to ballot and voting data
+
 	public void addCandidate(String cand) throws CandidateExistsException {
 		if (ballot.contains(cand)) {
 			throw new CandidateExistsException(cand);
@@ -49,13 +51,17 @@ class ElectionData {
 		ballot.add(cand);
 		votes.addOption(cand);
 	}
-
+    // returns winner with most firt choice votes
 	public String findWinnerMostFirstVotes() {
 		return votes.getWinnerMostVotes();
 	}
 
 	// getSum of individual list, return sum of all three.
 
+    /**
+     * returns winner with most total points
+     * @return
+     */
 	public String findWinnerMostPoints() {
 		return votes.getWinnerMostPoints();
 	}
