@@ -1,4 +1,5 @@
 class AutogradeCheck {
+    @SuppressWarnings("unused")
     public void checkStuffExists() {
         Exception e1 = new UnknownCandidateException("gompei");
         Exception e2 = new CandidateExistsException("gompei");

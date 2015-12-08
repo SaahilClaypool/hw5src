@@ -24,25 +24,47 @@ class ElectionData {
         }
     }
 
+    /**
+     * Add a processVote method that takes three strings (for the first, second,
+     * and third choices, respectively) and returns void. This method stores a
+     * single voter’s choices in your data structure. (Calling this method
+     * corresponds to someone voting in the election.)
+     * 
+     * @throws DuplicateVotesException
+     *             If any two of the three votes are identical.
+     * @throws UnknownCandidateException
+     *             If any of the three given candidates are not registered on
+     *             the ballot.
+     */
     public void processVote(String first, String second, String third)
             throws DuplicateVotesException, UnknownCandidateException {
-        if (!ballot.contains(first)) {
-            throw new UnknownCandidateException(first);
-        }
-        if (!ballot.contains(second)) {
-            throw new UnknownCandidateException(second);
-        }
-        if (!ballot.contains(third)) {
-            throw new UnknownCandidateException(third);
-        } // TODO refactor into a method. DRY.
+        checkUnknown(first);
+        checkUnknown(second);
+        checkUnknown(third);
+
         if (first.equals(second) || first.equals(third)) {
             throw new DuplicateVotesException(first);
         }
         if (second.equals(third)) {
             throw new DuplicateVotesException(second);
         }
-        // move to data class
+
         votes.addTally(first, second, third);
+    }
+
+    /**
+     * Determines Checks to see if the candidate exists in the ballot.
+     * 
+     * @param candidateName
+     *            String representing Candidate.
+     * @throws UnknownCandidateException
+     *             If the candidate is not in the ballot.
+     */
+    private void checkUnknown(String candidateName)
+            throws UnknownCandidateException {
+        if (!ballot.contains(candidateName)) {
+            throw new UnknownCandidateException(candidateName);
+        }
     }
 
     /**

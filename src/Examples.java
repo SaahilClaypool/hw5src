@@ -4,7 +4,9 @@ import tester.Tester;
  * Created by saahil claypool on 12/3/2015.
  */
 public class Examples {
-    // simple test
+    /*
+     * Tests that addCandidate() throws candidateExistsException
+     */
     public boolean testCandidateExists(Tester t)
             throws CandidateExistsException {
         ElectionData e = new ElectionData();
@@ -13,16 +15,23 @@ public class Examples {
                 "addCandidate", "tim");
     }
 
-    // simple test
+    /*
+     * Tests that processVote() throws duplicate votes exception with repeated
+     * name in votes.
+     */
     public boolean testDuplicateVotes(Tester t)
             throws CandidateExistsException {
         ElectionData e = new ElectionData();
+        e.addCandidate("valueIrrelevant");
         e.addCandidate("tim");
         e.addCandidate("tom");
         return t.checkException(new DuplicateVotesException("tim"), e,
                 "processVote", "tim", "tim", "tom");
     }
 
+    /*
+     * 
+     */
     public boolean testUnkownCandidate(Tester t)
             throws CandidateExistsException {
         ElectionData e = new ElectionData();
